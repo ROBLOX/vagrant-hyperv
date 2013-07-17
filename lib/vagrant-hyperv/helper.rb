@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module ProviderHyperV
+  module HyperV
     module Helper
 
       def win_friendly_path(path)

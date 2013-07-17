@@ -10,29 +10,33 @@ if Vagrant::VERSION < "1.2.0"
   raise "The Vagrant HyperV plugin is only compatible with Vagrant 1.2+"
 end
 
-# Add vagrant-hyperv plugin errors
-require "vagrant-hyperv/errors"
-
 module VagrantPlugins
-  module ProviderHyperV
+  module HyperV
     class Plugin < Vagrant.plugin("2")
-      name "HyperV provider"
+      name "HyperV"
       description <<-EOF
         The HyperV provider allows Vagrant to manage and control
         HyperV-based virtual machines.
       EOF
 
-      config(:hyperv) do
-        VagrantHyperV::Config::HyperV
+      config(:hyperv, :provider) do
+        require_relative "config"
+        Config
       end
 
-      #if Vagrant::VERSION >= "1.2.0"
-      # TODO: plugin body goes here
-      #end
+      provider(:hyperv, parallel: true) do
+        # Setup logging and i18n
+        setup_logging
+        setup_i18n
+
+        # Return the provider
+        require_relative "provider"
+        Provider
+      end
 
       # This initializes the internationalization strings.
       def self.setup_i18n
-        I18n.load_path << File.expand_path("locales/en.yml", VagrantHyperV.vagrant_hyperv_root)
+        I18n.load_path << File.expand_path("locales/en.yml", HyperV.source_root)
         I18n.reload!
       end
 

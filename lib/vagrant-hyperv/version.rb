@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module ProviderHyperV
-    VERSION = "0.1.0"
+  module HyperV
+    VERSION = "0.1.0.dev"
   end
 end

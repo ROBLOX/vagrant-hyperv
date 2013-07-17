@@ -1,7 +1,7 @@
 require 'vagrant/errors'
 
 module VagrantPlugins
-  module ProviderHyperV
+  module HyperV
     module Errors
 
       class VagrantHyperVError < ::Vagrant::Errors::VagrantError
