@@ -3,7 +3,7 @@ require "vagrant-hyperv/version"
 
 Gem::Specification.new do |s|
   s.name          = "vagrant-hyperv"
-  s.version       = VagrantHyperV::VERSION
+  s.version       = VagrantPlugins::ProviderHyperV::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = "Antoni Baranski"
   s.email         = "abaranski@roblox.com"

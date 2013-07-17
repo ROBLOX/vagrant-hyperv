@@ -1,11 +1,13 @@
 require 'vagrant/errors'
 
-module VagrantHyperV
-  module Errors
+module VagrantPlugins
+  module ProviderHyperV
+    module Errors
 
-    class VagrantHyperVError < ::Vagrant::Errors::VagrantError
-      error_namespace("vagrant_hyperv.errors")
+      class VagrantHyperVError < ::Vagrant::Errors::VagrantError
+        error_namespace("vagrant_hyperv.errors")
+      end
+
     end
-
   end
 end

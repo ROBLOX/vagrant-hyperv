@@ -13,59 +13,57 @@ end
 # Add vagrant-hyperv plugin errors
 require "vagrant-hyperv/errors"
 
-module VagrantHyperV
-  class Plugin < Vagrant.plugin("2")
-    name "HyperV provider"
-    description <<-DESC
-    This plugin installs a provider that allows Vagrant to manage
-    HyperV as a provider.
-    DESC
+module VagrantPlugins
+  module ProviderHyperV
+    class Plugin < Vagrant.plugin("2")
+      name "HyperV provider"
+      description <<-EOF
+        The HyperV provider allows Vagrant to manage and control
+        HyperV-based virtual machines.
+      EOF
 
-    config(:hyperv) do
-      VagrantHyperV::Config::HyperV
-    end
+      config(:hyperv) do
+        VagrantHyperV::Config::HyperV
+      end
 
-    #if Vagrant::VERSION >= "1.2.0"
-    # TODO: plugin body goes here
-    #end
+      #if Vagrant::VERSION >= "1.2.0"
+      # TODO: plugin body goes here
+      #end
 
-    # This initializes the internationalization strings.
-    def self.setup_i18n
-      I18n.load_path << File.expand_path("locales/en.yml", VagrantHyperV.vagrant_hyperv_root)
-      I18n.reload!
-    end
+      # This initializes the internationalization strings.
+      def self.setup_i18n
+        I18n.load_path << File.expand_path("locales/en.yml", VagrantHyperV.vagrant_hyperv_root)
+        I18n.reload!
+      end
 
-    # This sets up our log level to be whatever VAGRANT_LOG is.
-    def self.setup_logging
-      require "log4r"
+      # This sets up our log level to be whatever VAGRANT_LOG is.
+      def self.setup_logging
+        require "log4r"
 
-      level = nil
-      begin
-        level = Log4r.const_get(ENV["VAGRANT_LOG"].upcase)
-      rescue NameError
-        # This means that the logging constant wasn't found,
-        # which is fine. We just keep `level` as `nil`. But
-        # we tell the user.
         level = nil
-      end
+        begin
+          level = Log4r.const_get(ENV["VAGRANT_LOG"].upcase)
+        rescue NameError
+          # This means that the logging constant wasn't found,
+          # which is fine. We just keep `level` as `nil`. But
+          # we tell the user.
+          level = nil
+        end
 
-      # Some constants, such as "true" resolve to booleans, so the
-      # above error checking doesn't catch it. This will check to make
-      # sure that the log level is an integer, as Log4r requires.
-      level = nil if !level.is_a?(Integer)
+        # Some constants, such as "true" resolve to booleans, so the
+        # above error checking doesn't catch it. This will check to make
+        # sure that the log level is an integer, as Log4r requires.
+        level = nil if !level.is_a?(Integer)
 
-      # Set the logging level on all "vagrant" namespaced
-      # logs as long as we have a valid level.
-      if level
-        logger = Log4r::Logger.new("vagrant_hyperv")
-        logger.outputters = Log4r::Outputter.stderr
-        logger.level = level
-        logger = nil
+        # Set the logging level on all "vagrant" namespaced
+        # logs as long as we have a valid level.
+        if level
+          logger = Log4r::Logger.new("vagrant_hyperv")
+          logger.outputters = Log4r::Outputter.stderr
+          logger.level = level
+          logger = nil
+        end
       end
     end
-
   end
 end
-
-VagrantHyperV::Plugin.setup_logging()
-VagrantHyperV::Plugin.setup_i18n()
