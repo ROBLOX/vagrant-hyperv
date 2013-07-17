@@ -22,6 +22,9 @@ Win 8: http://www.microsoft.com/en-us/download/details.aspx?id=28972
 Win 7: http://www.microsoft.com/en-us/download/details.aspx?id=7887
 Vista: http://www.microsoft.com/en-us/download/details.aspx?id=21090
 
+HyperV PowerShell Management Library for Hyper-V
+http://pshyperv.codeplex.com/
+
 What Works?
 ===========
 - Nothing at present this is just a starting point
