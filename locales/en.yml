@@ -1,5 +1,9 @@
 en:
   vagrant_hyperv:
+    config:
+      hyperv_host_required: |-
+        You must specify a HyperV host on which the box is to be deployed
+
     initialization:
       nonwindows: |-
         HyperV provisiong only works on a Windows host machine

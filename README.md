@@ -28,6 +28,7 @@ http://pshyperv.codeplex.com/
 What Works?
 ===========
 - Nothing at present this is just a starting point
+- The box must have it's drive in the VHD format
 
 TODOs
 =========
