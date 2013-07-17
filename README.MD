@@ -7,10 +7,13 @@ _Does NOT work with XP_
 
 - Windows Vista
 - Windows 7
+- Windows 8
+
+Supported HyperV Systems:
+===========================================
 - Windows 2008
 - Windows 2008 R2
-- Windows 2012
-- Windows 8
+- Windows 2012 (Requires Windows 8 RSAT)
 
 Host system prerequisites
 ===========================================
