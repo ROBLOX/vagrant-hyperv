@@ -3,11 +3,11 @@ require "vagrant-hyperv/version"
 
 Gem::Specification.new do |s|
   s.name          = "vagrant-hyperv"
-  s.version       = VagrantPlugins::HyperV::VERSION
+  s.version       = VagrantHyperV::VERSION
   s.platform      = Gem::Platform::RUBY
-  s.authors       = "Andrew Nurse"
-  s.email         = "andrew@andrewnurse.net"
-  s.homepage      = "http://www.vibrantcode.com"
+  s.authors       = "Antoni Baranski"
+  s.email         = "abaranski@roblox.com"
+  s.homepage      = "http://www.roblox.com"
   s.summary       = "Enables Vagrant to manage machines in Hyper-V."
   s.description   = "Enables Vagrant to manage machines in Hyper-V."
 
