@@ -8,51 +8,29 @@ require 'vagrant/util/subprocess'
 module VagrantPlugins
   module HyperV
     module Driver
-      # Base class for all HyperV drivers.
+      # Base class for the HyperV driver.
       #
-      # This class provides useful tools for things such as executing
-      # PowerShell HyperV Po and handling SIGINTs and so on.
+      # This class provides an interface to the
+      # PowerShell Management Library for Hyper-V.
       class Base
         # Include this so we can use `Subprocess` more easily.
         include Vagrant::Util::Retryable
 
         def initialize
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox::base")
+          @logger = Log4r::Logger.new("vagrant_hyperv::provider::hyperv::base")
 
           # This flag is used to keep track of interrupted state (SIGINT)
           @interrupted = false
 
-          # Set the path to VBoxManage
-          @vboxmanage_path = "VBoxManage"
-
-          if Vagrant::Util::Platform.windows? || Vagrant::Util::Platform.cygwin?
-            @logger.debug("Windows. Trying VBOX_INSTALL_PATH for VBoxManage")
-
-            # On Windows, we use the VBOX_INSTALL_PATH environmental
-            # variable to find VBoxManage.
-            if ENV.has_key?("VBOX_INSTALL_PATH")
-              # Get the path.
-              path = ENV["VBOX_INSTALL_PATH"]
-              @logger.debug("VBOX_INSTALL_PATH value: #{path}")
-
-              # There can actually be multiple paths in here, so we need to
-              # split by the separator ";" and see which is a good one.
-              path.split(";").each do |single|
-                # Make sure it ends with a \
-                single += "\\" if !single.end_with?("\\")
-
-                # If the executable exists, then set it as the main path
-                # and break out
-                vboxmanage = "#{path}VBoxManage.exe"
-                if File.file?(vboxmanage)
-                  @vboxmanage_path = Vagrant::Util::Platform.cygwin_windows_path(vboxmanage)
-                  break
-                end
-              end
-            end
+          if !Vagrant::Util::Platform.windows? do
+            @logger.error(I18n.t("initialization.nonwindows"))
+            raise HyperV::Errors::VagrantHyperVError
           end
 
-          @logger.info("VBoxManage path: #{@vboxmanage_path}")
+          # execute Get-Module to verify that the PowerShell Management Library for Hyper-V is available
+          Util::Subprocess.execute("powershell.exe Get-Module HyperV")
+
+          @logger.info(I18n.t("initialization.done"))
         end
 
         # Clears the forwarded ports that have been set on the virtual machine.
@@ -282,7 +260,7 @@ module VagrantPlugins
           # If there is an error with VBoxManage, this gets set to true
           errored = false
 
-          retryable(:on => Vagrant::Errors::VBoxManageError, :tries => tries, :sleep => 1) do
+          retryable(:on => HyperV::Errors::VagrantHyperVError, :tries => tries, :sleep => 1) do
             # Execute the command
             r = raw(*command, &block)
 

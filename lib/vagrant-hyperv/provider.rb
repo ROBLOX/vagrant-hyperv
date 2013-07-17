@@ -8,7 +8,7 @@ module VagrantPlugins
       def initialize(machine)
         @machine = machine
         @logger = Log4r::Logger.new("vagrant_hyperv::provider::hyperv")
-        @logger.debug("initializing HyperV Provider")
+        @logger.debug("Initializing HyperV Provider")
 
         # This method will load in our driver, so we call it now to
         # initialize it.
