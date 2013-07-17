@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       class MessageWillNotDestroy
         def initialize(app, env)
@@ -7,7 +7,7 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:ui].info(I18n.t("vagrant_aws.will_not_destroy", name: env[:machine].name))
+          env[:ui].info(I18n.t("vagrant_hyperv.will_not_destroy", name: env[:machine].name))
           @app.call(env)
         end
       end

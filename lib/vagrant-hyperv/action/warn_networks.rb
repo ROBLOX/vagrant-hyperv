@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       class WarnNetworks
         def initialize(app, env)
@@ -8,7 +8,7 @@ module VagrantPlugins
 
         def call(env)
           if env[:machine].config.vm.networks.length > 0
-            env[:ui].warn(I18n.t("vagrant_aws.warn_networks"))
+            env[:ui].warn(I18n.t("vagrant_hyperv.warn_networks"))
           end
 
           @app.call(env)

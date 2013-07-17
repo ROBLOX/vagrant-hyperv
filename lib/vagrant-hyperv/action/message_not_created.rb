@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       class MessageNotCreated
         def initialize(app, env)
@@ -7,7 +7,7 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:ui].info(I18n.t("vagrant_aws.not_created"))
+          env[:ui].info(I18n.t("vagrant_hyperv.not_created"))
           @app.call(env)
         end
       end

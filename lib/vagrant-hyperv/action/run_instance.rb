@@ -5,7 +5,7 @@ require 'vagrant/util/retryable'
 require 'vagrant-aws/util/timer'
 
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       # This runs the configured instance.
       class RunInstance
@@ -13,7 +13,7 @@ module VagrantPlugins
 
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant_aws::action::run_instance")
+          @logger = Log4r::Logger.new("vagrant_hyperv::action::run_instance")
         end
 
         def call(env)
@@ -75,7 +75,7 @@ module VagrantPlugins
               options[security_group_key] = security_groups
             end
 
-            server = env[:aws_compute].servers.create(options)
+            server = env[:hyperv_compute].servers.create(options)
           rescue Fog::Compute::AWS::NotFound => e
             # Invalid subnet doesn't have its own error so we catch and
             # check the error message here.

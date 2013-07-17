@@ -1,14 +1,14 @@
 require "log4r"
 
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       # This action reads the state of the machine and puts it in the
       # `:machine_state_id` key in the environment.
       class ReadState
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant_aws::action::read_state")
+          @logger = Log4r::Logger.new("vagrant_hyperv::action::read_state")
         end
 
         def call(env)

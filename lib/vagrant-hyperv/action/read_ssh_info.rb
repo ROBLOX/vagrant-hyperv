@@ -1,14 +1,14 @@
 require "log4r"
 
 module VagrantPlugins
-  module AWS
+  module HyperV
     module Action
       # This action reads the SSH info for the machine and puts it into the
       # `:machine_ssh_info` key in the environment.
       class ReadSSHInfo
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant_aws::action::read_ssh_info")
+          @logger = Log4r::Logger.new("vagrant_hyperv::action::read_ssh_info")
         end
 
         def call(env)
